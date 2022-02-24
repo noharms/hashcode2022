@@ -1,3 +1,5 @@
+package total;
+
 public class Solution {
 
     // output fields
