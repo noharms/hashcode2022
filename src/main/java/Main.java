@@ -4,7 +4,9 @@ public class Main {
 
         RawInputData inputData = RawInputData.create();
 
-        Solution solution = Solution.from(inputData);
+        ProblemDescription problemDescription = ProblemDescription.from(inputData);
+
+        Solution solution = Solution.from(problemDescription);
 
         OutputWriter writer = OutputWriter.from(solution);
         writer.write();

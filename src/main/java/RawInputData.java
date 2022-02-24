@@ -7,24 +7,11 @@ import java.util.Scanner;
  * Class to hold in memory the RAW content of all input files that we need to consider.
  * Each input file is represented here as a {@code List<String>} which represents the lines in that file
  */
-public class RawInputData {
-
-    public final List<String> linesFile1;
-
-    public RawInputData(List<String> linesFile1) {
-        this.linesFile1 = linesFile1;
-    }
+public record RawInputData(List<String> lines) {
 
     public static RawInputData create() {
-
-        // file 1
-        List<String> linesEnnoInputFile = readAllLines("enno_exampl_input.txt");
-
-        // file 2
-        // .. specify further files here ..
-        // List<String> linesXYZ = readAllLines("xyz.txt");
-
-        return new RawInputData(linesEnnoInputFile);
+        List<String> lines = readAllLines("a_an_example.in.txt");
+        return new RawInputData(lines);
     }
 
     private static List<String> readAllLines(String fileName) {
