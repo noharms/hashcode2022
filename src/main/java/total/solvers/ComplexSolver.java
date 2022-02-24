@@ -46,7 +46,7 @@ public class ComplexSolver extends Solver {
             } while (projectToWorkOn != null);
             currentDay++;
         }
-        System.out.println(projectToAssignments);
+//        System.out.println(projectToAssignments);
         return new Solution(projectToAssignments);
     }
 }
