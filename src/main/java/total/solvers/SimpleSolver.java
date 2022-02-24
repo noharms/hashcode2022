@@ -45,7 +45,7 @@ public class SimpleSolver extends Solver {
             } while (projectToWorkOn != null);
             round++;
         }
-
+        System.out.println(projectToAssignments);
         return new Solution(projectToAssignments);
     }
 
