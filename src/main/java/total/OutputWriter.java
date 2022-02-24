@@ -3,6 +3,7 @@ package total;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record OutputWriter(Solution solution) {
 
@@ -22,10 +23,8 @@ public record OutputWriter(Solution solution) {
             outputBuilder.append(project.name());
             outputBuilder.append("\n");
 
-            for (Contributor contributor : assignments) {
-                outputBuilder.append(contributor.name());
-                outputBuilder.append("\n");
-            }
+            outputBuilder.append(assignments.stream().map(Contributor::name).collect(Collectors.joining(" ")));
+            outputBuilder.append("\n");
         }
 
         String outputFileName = "output1.txt";
