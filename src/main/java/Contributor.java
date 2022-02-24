@@ -1,4 +1,4 @@
-import java.util.EnumMap;
+import java.util.Map;
 
-public record Contributor(String name, EnumMap<Skill, Integer> skillLevel) {
+public record Contributor(String name, Map<String, Integer> skillLevel) {
 }

@@ -1,2 +1,2 @@
-public record SkillLevel(Skill skill, int level) {
+public record SkillLevel(String skill, int level) {
 }
