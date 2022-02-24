@@ -1,6 +1,7 @@
 package total.solvers;
 
 import total.ProblemDescription;
+import total.Solution;
 
 public abstract class Solver {
     final ProblemDescription problem;
@@ -9,5 +10,5 @@ public abstract class Solver {
         this.problem = problem;
     }
 
-    abstract public void solve();
+    abstract public Solution solve();
 }

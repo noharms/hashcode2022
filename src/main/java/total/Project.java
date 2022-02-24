@@ -4,8 +4,8 @@ import java.util.*;
 
 public record Project(String name, int duration, int score, int bestBefore, List<SkillLevel> requiredLevels) {
 
-    public Optional<Set<Contributor>> needsTheseContributors(List<Contributor> availableContributors) {
-        Set<Contributor> required = new HashSet<>();
+    public Optional<List<Contributor>> needsTheseContributors(List<Contributor> availableContributors) {
+        LinkedHashSet<Contributor> required = new LinkedHashSet<>();
         for (SkillLevel requiredLevel : requiredLevels) {
             Optional<Contributor> optionalContributor = availableContributors
                     .stream()
@@ -15,6 +15,6 @@ public record Project(String name, int duration, int score, int bestBefore, List
             if (optionalContributor.isEmpty()) return Optional.empty();
             else required.add(optionalContributor.get());
         }
-        return Optional.of(required);
+        return Optional.of(required.stream().toList());
     }
 }
