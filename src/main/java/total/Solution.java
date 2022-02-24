@@ -12,7 +12,7 @@ public record Solution(LinkedHashMap<Project, List<Contributor>> projectToAssign
             List<Contributor> contributors = entry.getValue();
             int firstDateWhereAllAreAvailable = contributors.stream()
                     .mapToInt(contributor -> availableAt.getOrDefault(contributor, 0))
-                    .min()
+                    .max()
                     .getAsInt();
             int freeAgainAtDay = firstDateWhereAllAreAvailable + project.duration();
             contributors.forEach(contributor -> availableAt.put(contributor, freeAgainAtDay));
@@ -30,4 +30,16 @@ public record Solution(LinkedHashMap<Project, List<Contributor>> projectToAssign
         return totalScore;
     }
 
+    public static void main(String[] args) {
+        RawInputData inputData = RawInputData.create();
+
+        ProblemDescription problemDescription = ProblemDescription.from(inputData);
+        final List<Project> projects = problemDescription.projects();
+        final List<Contributor> contributors = problemDescription.contributors();
+        final LinkedHashMap<Project, List<Contributor>> projectToAssignments = new LinkedHashMap<>();
+        projectToAssignments.put(projects.get(1), List.of(contributors.get(1),contributors.get(0)));
+        projectToAssignments.put(projects.get(0), List.of(contributors.get(0)));
+        projectToAssignments.put(projects.get(2), List.of(contributors.get(2),contributors.get(1)));
+        System.out.println(new Solution(projectToAssignments).computeScore());
+    }
 }
