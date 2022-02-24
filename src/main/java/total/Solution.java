@@ -1,15 +1,8 @@
 package total;
 
-public class Solution {
+import java.util.LinkedHashMap;
+import java.util.List;
 
-    // output fields
-    // TODO add fields that shall be computed for the output
-
-
-    public static Solution from(ProblemDescription problemDescription) {
-        return new Solution();
-    }
-
-    // TODO compute output fields with some logic
+public record Solution(LinkedHashMap<Project, List<Contributor>> projectToAssignments) {
 
 }
