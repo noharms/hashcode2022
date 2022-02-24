@@ -24,7 +24,7 @@ public record Solution(LinkedHashMap<Project, List<Contributor>> projectToAssign
             }
             project.levelup(contributors);
             final int penalty = Math.max(freeAgainAtDay - project.bestBefore(), 0);
-            final int score = project.score() - penalty;
+            final int score = Math.max(project.score() - penalty, 0);
             totalScore += score;
         }
         return totalScore;
