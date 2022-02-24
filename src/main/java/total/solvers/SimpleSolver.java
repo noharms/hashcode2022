@@ -22,13 +22,13 @@ public class SimpleSolver extends Solver {
         Map<Contributor, Integer> occupiedUntil = new HashMap<>();
         problem.contributors()
                 .forEach(contributor -> occupiedUntil.put(contributor, 0));
-        int round = 0;
-        long maxNumberRounds = problem.projects().stream().mapToLong(Project::duration).sum();
+        int currentDay = 0;
+        long maxNumberDays = problem.projects().stream().mapToLong(Project::duration).sum()*10;
         Project projectToWorkOn;
         LinkedHashMap<Project, List<Contributor>> projectToAssignments = new LinkedHashMap<>();
-        while (round < maxNumberRounds) {
+        while (currentDay < maxNumberDays) {
             do {
-                int finalRound = round;
+                int finalRound = currentDay;
                 projectToWorkOn = null;
                 for (Project project : projectsByScore) {
                     List<Contributor> availableContributors = occupiedUntil.entrySet().stream().filter(entry -> entry.getValue() <= finalRound).map(Map.Entry::getKey).collect(Collectors.toList());
@@ -36,6 +36,7 @@ public class SimpleSolver extends Solver {
                     if (contributors.isPresent()) {
                         projectToAssignments.put(project, contributors.get());
                         projectToWorkOn = project;
+                        project.levelup(contributors.get());
                         contributors.get().forEach(contributor -> occupiedUntil.merge(contributor, project.duration(), Integer::sum));
                     }
                 }
@@ -43,7 +44,7 @@ public class SimpleSolver extends Solver {
                     projectsByScore.remove(projectToWorkOn);
                 }
             } while (projectToWorkOn != null);
-            round++;
+            currentDay++;
         }
         System.out.println(projectToAssignments);
         return new Solution(projectToAssignments);

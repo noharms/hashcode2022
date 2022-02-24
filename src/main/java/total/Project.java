@@ -1,6 +1,7 @@
 package total;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public record Project(String name, int duration, int score, int bestBefore, List<SkillLevel> requiredLevels) {
 
@@ -16,5 +17,15 @@ public record Project(String name, int duration, int score, int bestBefore, List
             else required.add(optionalContributor.get());
         }
         return Optional.of(required.stream().toList());
+    }
+
+    public void levelup(List<Contributor> contributors) {
+        IntStream.range(0, contributors.size())
+                .forEach(index -> {
+                    final String skill = requiredLevels.get(index).skill();
+                    if (requiredLevels.get(index).level() >= contributors.get(index).skillLevel().getOrDefault(skill, 0)) {
+                        contributors.get(index).skillLevel().merge(skill, 1, Integer::sum);
+                    }
+                });
     }
 }
