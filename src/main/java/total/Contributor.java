@@ -3,6 +3,9 @@ package total;
 import java.util.Map;
 
 public final class Contributor {
+
+    public static double d = 1;
+
     private final String name;
     private final Map<String, Integer> skillLevel;
 
@@ -12,13 +15,6 @@ public final class Contributor {
     }
 
     public static double aContributor = 1;
-
-    // a * nSkills
-    public double heuristicValue() {
-        double numerator = aContributor * skillLevel.size();
-        double denominator = 1;
-        return numerator / denominator;
-    }
 
     public String name() {
         return name;
@@ -35,5 +31,12 @@ public final class Contributor {
                 "skillLevel=" + skillLevel + ']';
     }
 
+
+    // a * nSkills
+    public double heuristicValue() {
+        double numerator = d * skillLevel.size();
+        double denominator = 1;
+        return numerator / denominator;
+    }
 
 }
