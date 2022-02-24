@@ -10,16 +10,25 @@ public record Project(String name, int duration, int score, int bestBefore, List
     public static double c = 1;
     public static double d = 1;
 
-    public Optional<List<Contributor>> needsTheseContributors(List<Contributor> availableContributors) {
+    public Optional<List<Contributor>> needsTheseContributors(Map<String, List<Contributor>> availableContributors) {
         LinkedHashSet<Contributor> required = new LinkedHashSet<>();
         for (SkillLevel requiredLevel : requiredLevels) {
-            Optional<Contributor> optionalContributor = availableContributors
+            final List<Contributor> contributors = availableContributors.get(requiredLevel.skill());
+            Optional<Contributor> optionalContributor = contributors
                     .stream()
                     .filter(contributor -> !required.contains(contributor))
                     .filter(contributor -> contributor.skillLevel().getOrDefault(requiredLevel.skill(), 0) >= requiredLevel.level())
                     .findFirst();
             if (optionalContributor.isEmpty()) return Optional.empty();
-            else required.add(optionalContributor.get());
+            else {
+                final Contributor contributor = optionalContributor.get();
+                required.add(contributor);
+            }
+        }
+        for (Contributor contributor : required) {
+            for (String skill : availableContributors.keySet()) {
+                availableContributors.get(skill).remove(contributor);
+            }
         }
         return Optional.of(required.stream().toList());
     }

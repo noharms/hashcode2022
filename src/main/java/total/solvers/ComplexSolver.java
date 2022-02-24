@@ -21,26 +21,39 @@ public class ComplexSolver extends Solver {
                 .collect(Collectors.toList());
         Map<Contributor, Integer> occupiedUntil = new HashMap<>();
         problem.contributors()
-                .stream()
-                .sorted(Comparator.comparing(Contributor::heuristicValue))
                 .forEach(contributor -> occupiedUntil.put(contributor, 0));
+        Map<String, List<Contributor>> sortedContributors = new HashMap<>();
+        for (Contributor contributor : problem.contributors()) {
+            for (Map.Entry<String, Integer> entry : contributor.skillLevel().entrySet()) {
+                sortedContributors.computeIfAbsent(entry.getKey(), s -> new ArrayList<>())
+                        .add(contributor);
+            }
+        }
+        sortedContributors.values().forEach(contributors -> contributors.sort(Comparator.comparing(Contributor::heuristicValue)));
         int currentDay = 0;
         long maxNumberDays = problem.projects().stream().mapToLong(Project::duration).sum() * 10;
         Project projectToWorkOn;
-        LinkedHashMap<Project, List<Contributor>> projectToAssignments = new LinkedHashMap<>();
+        LinkedHashMap<Project, List<Contributor>> solution = new LinkedHashMap<>();
         while (currentDay < maxNumberDays) {
-            int finalRound = currentDay;
-            List<Contributor> availableContributors = occupiedUntil.entrySet().stream().filter(entry -> entry.getValue() <= finalRound).map(Map.Entry::getKey).collect(Collectors.toList());
+            int fCurrentDay = currentDay;
+            Map<String, List<Contributor>> sortedAvailable = sortedContributors.entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue()
+                                    .stream()
+                                    .filter(contributor -> occupiedUntil.get(contributor) <= fCurrentDay)
+                                    .collect(Collectors.toList()))
+                    );
             do {
                 projectToWorkOn = null;
                 for (Project project : projectsByScore) {
-                    Optional<List<Contributor>> contributors = project.needsTheseContributors(availableContributors);
+                    Optional<List<Contributor>> contributors = project.needsTheseContributors(sortedAvailable);
                     if (contributors.isPresent()) {
-                        projectToAssignments.put(project, contributors.get());
+                        solution.put(project, contributors.get());
                         projectToWorkOn = project;
                         project.levelup(contributors.get());
-                        contributors.get().forEach(contributor -> occupiedUntil.merge(contributor, project.duration(), Integer::sum));
-                        availableContributors.removeAll(contributors.get());
+                        contributors.get().forEach(contributor -> occupiedUntil.put(contributor, project.duration() + fCurrentDay));
                     }
                 }
                 if (projectToWorkOn != null) {
@@ -50,6 +63,6 @@ public class ComplexSolver extends Solver {
             currentDay++;
         }
 //        System.out.println(projectToAssignments);
-        return new Solution(projectToAssignments);
+        return new Solution(solution);
     }
 }

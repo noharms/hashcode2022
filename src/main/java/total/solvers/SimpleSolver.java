@@ -34,7 +34,7 @@ public class SimpleSolver extends Solver {
                 projectToWorkOn = null;
                 for (Project project : projectsByScore) {
                     List<Contributor> availableContributors = occupiedUntil.entrySet().stream().filter(entry -> entry.getValue() <= finalRound).map(Map.Entry::getKey).collect(Collectors.toList());
-                    Optional<List<Contributor>> contributors = project.needsTheseContributors(availableContributors);
+                    Optional<List<Contributor>> contributors = project.needsTheseContributors(new HashMap<>());
                     if (contributors.isPresent()) {
                         projectToAssignments.put(project, contributors.get());
                         projectToWorkOn = project;
