@@ -34,6 +34,7 @@ public class ComplexSolver extends Solver {
         long maxNumberDays = problem.projects().stream().mapToLong(Project::duration).sum() * 10;
         Project projectToWorkOn;
         LinkedHashMap<Project, List<Contributor>> solution = new LinkedHashMap<>();
+        Integer minProjDuration = null;
         while (currentDay < maxNumberDays) {
             int fCurrentDay = currentDay;
             Map<String, List<Contributor>> sortedAvailable = sortedContributors.entrySet()
@@ -54,15 +55,17 @@ public class ComplexSolver extends Solver {
                         projectToWorkOn = project;
                         project.levelup(contributors.get());
                         contributors.get().forEach(contributor -> occupiedUntil.put(contributor, project.duration() + fCurrentDay));
+                        if (minProjDuration == null || minProjDuration > project.duration())
+                            minProjDuration = project.duration();
                     }
                 }
                 if (projectToWorkOn != null) {
                     projectsByScore.remove(projectToWorkOn);
                 }
             } while (projectToWorkOn != null);
-            currentDay++;
+            if (minProjDuration == null) currentDay++;
+            else currentDay += minProjDuration;
         }
-//        System.out.println(projectToAssignments);
         return new Solution(solution);
     }
 }
