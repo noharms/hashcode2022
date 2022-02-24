@@ -28,4 +28,14 @@ public record Project(String name, int duration, int score, int bestBefore, List
                     }
                 });
     }
+
+    // a * score / (b * duration + c * nRequiredSkills)
+    public double heuristicValue() {
+        int a = 1;
+        int b = 1;
+        int c = 1;
+        double numerator = a * score;
+        double denominator = b * duration + c * requiredLevels.size();
+        return numerator / denominator;
+    }
 }
