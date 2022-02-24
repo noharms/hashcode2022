@@ -1,6 +1,6 @@
 package total;
 
-import java.util.LinkedHashMap;
+import total.solvers.SimpleSolver;
 
 public class Main {
 
@@ -10,7 +10,7 @@ public class Main {
 
         ProblemDescription problemDescription = ProblemDescription.from(inputData);
 
-        Solution solution = new Solution(new LinkedHashMap<>());
+        Solution solution = new SimpleSolver(problemDescription).solve();
 
         OutputWriter writer = new OutputWriter(solution);
         writer.write();
