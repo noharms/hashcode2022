@@ -4,8 +4,8 @@ import java.util.Map;
 
 public final class Contributor {
 
-    public static double d = 1;
-    public static double e = 1;
+    public static double x = 1;
+    public static double y = 1;
 
     private final String name;
     private final Map<String, Integer> skillLevel;
@@ -36,7 +36,7 @@ public final class Contributor {
     // a * nSkills
     public double heuristicValue() {
         int summedSkill = skillLevel.values().stream().mapToInt(i -> i).sum();
-        double numerator = d * skillLevel.size() + e * summedSkill;
+        double numerator = x * skillLevel.size() + y * summedSkill;
         double denominator = 1;
         return numerator / denominator;
     }

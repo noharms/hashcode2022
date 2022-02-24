@@ -8,6 +8,7 @@ public record Project(String name, int duration, int score, int bestBefore, List
     public static double a = 1;
     public static double b = 1;
     public static double c = 1;
+    public static double d = 1;
 
     public Optional<List<Contributor>> needsTheseContributors(List<Contributor> availableContributors) {
         LinkedHashSet<Contributor> required = new LinkedHashSet<>();
@@ -35,8 +36,9 @@ public record Project(String name, int duration, int score, int bestBefore, List
 
     // a * score / (b * duration + c * nRequiredSkills)
     public double heuristicValue() {
+        int summedRequiredSkillLevels = requiredLevels.stream().mapToInt(SkillLevel::level).sum();
         double numerator = a * score;
-        double denominator = b * duration + c * requiredLevels.size();
+        double denominator = b * duration + c * requiredLevels.size() + d * summedRequiredSkillLevels;
         return numerator / denominator;
     }
 }

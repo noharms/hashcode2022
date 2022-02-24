@@ -12,7 +12,8 @@ import java.util.Scanner;
 public record RawInputData(List<String> lines) {
 
     public static RawInputData create() {
-        List<String> lines = readAllLines("..//b_better_start_small.in.txt");
+        List<String> lines = readAllLines("..//a_an_example.in.txt");
+//        List<String> lines = readAllLines("..//b_better_start_small.in.txt");
 //        List<String> lines = readAllLines("..//c_collaboration.in.txt");
         return new RawInputData(lines);
     }

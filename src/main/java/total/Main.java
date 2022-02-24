@@ -10,10 +10,10 @@ public class Main {
 
 
         Solution optimalSolution = null;
-        double deltaA = 0.2;
-        double deltaB = 0.2;
-        double deltaC = 0.2;
-        double deltaD = 0.2;
+        double deltaA = 10;
+        double deltaB = 10;
+        double deltaC = 10;
+        double deltaD = 10;
         int n1 = 4;
         int n2 = 4;
         int n3 = 4;
@@ -25,7 +25,7 @@ public class Main {
                 for (int k = 0; k < n3; k++) {
                     Project.c = Project.c + deltaC;
                     for (int l = 0; l < n4; l++) {
-                        Contributor.d = Contributor.d + deltaD;
+                        Contributor.x = Contributor.x + deltaD;
 
 
                         Solution solution = new ComplexSolver(ProblemDescription.from(inputData)).solve();
