@@ -16,7 +16,7 @@ public record Project(String name, int duration, int score, int bestBefore, List
                     .stream()
                     .filter(contributor -> !required.contains(contributor))
                     .filter(contributor -> contributor.skillLevel().getOrDefault(requiredLevel.skill(), 0) >= requiredLevel.level())
-                    .min(Comparator.comparing(contributor -> contributor.skillLevel().getOrDefault(requiredLevel.skill(), 0)));
+                    .min(Comparator.comparing(Contributor::heuristicValue));
             if (optionalContributor.isEmpty()) return Optional.empty();
             else required.add(optionalContributor.get());
         }
