@@ -43,7 +43,7 @@ public class ComplexSolver extends Solver {
                             Map.Entry::getKey,
                             e -> e.getValue()
                                     .stream()
-                                    .filter(contributor -> occupiedUntil.get(contributor) <= fCurrentDay)
+                                    .filter(contributor -> occupiedUntil.get(contributor) < fCurrentDay)
                                     .collect(Collectors.toList()))
                     );
             do {

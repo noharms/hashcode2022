@@ -12,9 +12,12 @@ import java.util.Scanner;
 public record RawInputData(List<String> lines) {
 
     public static RawInputData create() {
-        List<String> lines = readAllLines("..//b_better_start_small.in.txt");
+//        List<String> lines = readAllLines("..//b_better_start_small.in.txt");
 //        List<String> lines = readAllLines("..//b_better_start_small.in.txt");
 //        List<String> lines = readAllLines("..//c_collaboration.in.txt");
+//        List<String> lines = readAllLines("..//d_dense_schedule.in.txt");
+        List<String> lines = readAllLines("..//e_exceptional_skills.in.txt");
+//        List<String> lines = readAllLines("..//f_find_great_mentors.in.txt");
         return new RawInputData(lines);
     }
 

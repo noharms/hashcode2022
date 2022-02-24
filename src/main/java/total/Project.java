@@ -17,7 +17,8 @@ public record Project(String name, int duration, int score, int bestBefore, List
             Optional<Contributor> optionalContributor = contributors
                     .stream()
                     .filter(contributor -> !required.contains(contributor))
-                    .filter(contributor -> contributor.skillLevel().getOrDefault(requiredLevel.skill(), 0) >= requiredLevel.level())
+                    .filter(contributor -> contributor.skillLevel()
+                                                      .getOrDefault(requiredLevel.skill(), 0) >= requiredLevel.level())
                     .findFirst();
             if (optionalContributor.isEmpty()) return Optional.empty();
             else {
@@ -34,13 +35,15 @@ public record Project(String name, int duration, int score, int bestBefore, List
     }
 
     public void levelup(List<Contributor> contributors) {
-        IntStream.range(0, contributors.size())
-                .forEach(index -> {
-                    final String skill = requiredLevels.get(index).skill();
-                    if (requiredLevels.get(index).level() >= contributors.get(index).skillLevel().getOrDefault(skill, 0)) {
-                        contributors.get(index).skillLevel().merge(skill, 1, Integer::sum);
-                    }
-                });
+//        IntStream.range(0, contributors.size())
+//                 .forEach(index -> {
+//                     final String skill = requiredLevels.get(index).skill();
+//                     if (contributors.get(index).skillLevel().containsKey(skill) &&
+//                             requiredLevels.get(index).level() == contributors.get(index).skillLevel()
+//                                                                              .getOrDefault(skill, 0)) {
+//                         contributors.get(index).skillLevel().merge(skill, 1, Integer::sum);
+//                     }
+//                 });
     }
 
     // a * score / (b * duration + c * nRequiredSkills)
