@@ -30,7 +30,7 @@ public class Main {
                         Contributor.d = Contributor.d + deltaD;
 
 
-                        Solution solution = new ComplexSolver(problemDescription).solve();
+                        Solution solution = new ComplexSolver(ProblemDescription.from(inputData)).solve();
 
                         if (optimalSolution == null || optimalSolution.computeScore() < solution.computeScore()) {
                             optimalSolution = solution;
