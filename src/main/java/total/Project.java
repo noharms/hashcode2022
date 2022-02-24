@@ -5,6 +5,10 @@ import java.util.stream.IntStream;
 
 public record Project(String name, int duration, int score, int bestBefore, List<SkillLevel> requiredLevels) {
 
+    public static double aProject = 1;
+    public static double bProject = 1;
+    public static double cProject = 1;
+
     public Optional<List<Contributor>> needsTheseContributors(List<Contributor> availableContributors) {
         LinkedHashSet<Contributor> required = new LinkedHashSet<>();
         for (SkillLevel requiredLevel : requiredLevels) {
@@ -31,11 +35,8 @@ public record Project(String name, int duration, int score, int bestBefore, List
 
     // a * score / (b * duration + c * nRequiredSkills)
     public double heuristicValue() {
-        int a = 1;
-        int b = 1;
-        int c = 1;
-        double numerator = a * score;
-        double denominator = b * duration + c * requiredLevels.size();
+        double numerator = aProject * score;
+        double denominator = bProject * duration + cProject * requiredLevels.size();
         return numerator / denominator;
     }
 }

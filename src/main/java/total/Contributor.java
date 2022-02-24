@@ -4,10 +4,11 @@ import java.util.Map;
 
 public record Contributor(String name, Map<String, Integer> skillLevel) {
 
+    public static double aContributor = 1;
+
     // a * nSkills
     public double heuristicValue() {
-        int a = 1;
-        double numerator = a * skillLevel.size();
+        double numerator = aContributor * skillLevel.size();
         double denominator = 1;
         return numerator / denominator;
     }
