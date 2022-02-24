@@ -12,6 +12,7 @@ public class Main {
 
         Solution solution = new SimpleSolver(problemDescription).solve();
 
+        System.out.println(solution.computeScore());
         OutputWriter writer = new OutputWriter(solution);
         writer.write();
 
