@@ -19,8 +19,10 @@ public class SimpleSolver extends Solver {
                 .stream()
                 .sorted(Comparator.comparing(Project::score).reversed())
                 .collect(Collectors.toList());
-        Map<Contributor, Integer> occupiedUntil = new HashMap<>();
+        Map<Contributor, Integer> occupiedUntil = new LinkedHashMap<>();
         problem.contributors()
+                .stream()
+                .sorted(Comparator.comparing(Contributor::heuristicValue))
                 .forEach(contributor -> occupiedUntil.put(contributor, 0));
         int currentDay = 0;
         long maxNumberDays = problem.projects().stream().mapToLong(Project::duration).sum()*10;
@@ -46,7 +48,6 @@ public class SimpleSolver extends Solver {
             } while (projectToWorkOn != null);
             currentDay++;
         }
-        System.out.println(projectToAssignments);
         return new Solution(projectToAssignments);
     }
 

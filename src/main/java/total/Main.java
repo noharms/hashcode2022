@@ -8,8 +8,6 @@ public class Main {
 
         RawInputData inputData = RawInputData.create();
 
-        ProblemDescription problemDescription = ProblemDescription.from(inputData);
-
 
         Solution optimalSolution = null;
         double deltaA = 0.2;
