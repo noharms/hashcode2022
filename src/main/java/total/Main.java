@@ -12,7 +12,7 @@ public class Main {
 
         Solution solution = new Solution(new LinkedHashMap<>());
 
-        OutputWriter writer = OutputWriter.from(solution);
+        OutputWriter writer = new OutputWriter(solution);
         writer.write();
 
         System.out.println("Victory.");

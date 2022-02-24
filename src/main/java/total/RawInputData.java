@@ -12,13 +12,13 @@ import java.util.Scanner;
 public record RawInputData(List<String> lines) {
 
     public static RawInputData create() {
-        List<String> lines = readAllLines("a_an_example.in.txt");
+        List<String> lines = readAllLines("..//a_an_example.in.txt");
         return new RawInputData(lines);
     }
 
     private static List<String> readAllLines(String fileName) {
         List<String> result = new ArrayList<>();
-        InputStream inputStream = RawInputData.class.getResourceAsStream(fileName);
+        InputStream inputStream = Main.class.getResourceAsStream(fileName);
         if (inputStream == null) {
             throw new IllegalArgumentException("File not found: " + fileName);
         } else {
